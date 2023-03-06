@@ -3,9 +3,11 @@ import { ColorSchemeToggle } from "../ToggleScheme/ColorSchemeToggle";
 import Logo from "./Logo";
 
 import { useState } from 'react';
-import { createStyles, Header, Group, ActionIcon, Container, Burger } from '@mantine/core';
+import { createStyles, Header, Group, ActionIcon, Container, Burger, Stack, Text, Title } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { BrandInstagram, BrandTwitter, BrandYoutube } from "tabler-icons-react";
+import { useGetRateLimit } from "../../pages/api/data-access/useGetRateLimit";
+import moment from "moment";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -72,12 +74,21 @@ export function HeaderMiddle() {
   const { classes, cx } = useStyles();
 
 
+  const { data: rateLimit, isLoading } = useGetRateLimit();
+
+
+
   return (
     <Header height={56} mb={20}>
       <Container className={classes.inner}>
-        <Burger opened={opened} onClick={toggle} size="sm" className={classes.burger} />
+        {/* <Burger opened={opened} onClick={toggle} size="sm" className={classes.burger} /> */}
         <Group className={classes.links} spacing={5}>
           <Logo />
+        </Group>
+
+        <Group position="center">
+            <Text color="dimmed">{rateLimit.used} out of {rateLimit.limit} <Text>Resets at {moment.unix(rateLimit.reset).fromNow()}</Text></Text>
+            
         </Group>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
