@@ -81,13 +81,12 @@ export function HeaderMiddle() {
   return (
     <Header height={56} mb={20}>
       <Container className={classes.inner}>
-        {/* <Burger opened={opened} onClick={toggle} size="sm" className={classes.burger} /> */}
         <Group className={classes.links} spacing={5}>
           <Logo />
         </Group>
 
         <Group position="center">
-            <Text color="dimmed">{rateLimit.used} out of {rateLimit.limit} <Text>Resets at {moment.unix(rateLimit.reset).fromNow()}</Text></Text>
+            <Text color="dimmed">{rateLimit.used} out of {rateLimit.limit} requests<Text>Resets {moment.unix(rateLimit.reset).fromNow()}</Text></Text>
             
         </Group>
 

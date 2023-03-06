@@ -1,8 +1,9 @@
-import { TextInput, TextInputProps, ActionIcon, useMantineTheme, Button, Text, Loader } from '@mantine/core';
-import { ArrowRight, Search } from 'tabler-icons-react';
-import { useState } from 'react';
+import { ActionIcon, Button, TextInput, TextInputProps, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { useState } from 'react';
+import { ArrowRight, Search } from 'tabler-icons-react';
 import { useGetUser } from '../../pages/api/data-access/useGetUser';
+import { User } from '../UserInfo/user';
 
 export function SearchUsername(props: TextInputProps) {
   const theme = useMantineTheme();
@@ -48,10 +49,7 @@ export function SearchUsername(props: TextInputProps) {
         </form>
 
         {userInformation && (
-          <div>
-            <h1>{userInformation.name}</h1>
-            <p>{userInformation.bio}</p>
-          </div>
+          <User {...userInformation}/>
         )}    
       </>
       
