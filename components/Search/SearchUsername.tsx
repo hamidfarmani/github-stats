@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { ArrowRight, Search } from 'tabler-icons-react';
 import { useGetUser } from '../../pages/api/data-access/useGetUser';
-import { User } from '../UserInfo/user';
+import { User } from '../UserInfo/User';
 
 export function SearchUsername(props: TextInputProps) {
   const theme = useMantineTheme();

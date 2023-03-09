@@ -1,6 +1,5 @@
 import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
 import { getCookie, setCookie } from "cookies-next";
-import { SessionProvider } from "next-auth/react";
 import NextApp from "next/app";
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -27,20 +26,18 @@ export default function App(props) {
 
   return (
     <>
-      <SessionProvider session={pageProps.session}>
-        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-          <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-            <QueryClientProvider client={queryClient}>
-              <React.Suspense fallback={<>Loading</>}>
-                  <WebsiteStructure>
-                    <Component {...pageProps} />
-                  </WebsiteStructure>
-                  <Notifications />
-                </React.Suspense>
-              </QueryClientProvider>
-          </MantineProvider>
-        </ColorSchemeProvider>
-      </SessionProvider>
+      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+        <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+          <QueryClientProvider client={queryClient}>
+            <React.Suspense fallback={<>Loading</>}>
+                <WebsiteStructure>
+                  <Component {...pageProps} />
+                </WebsiteStructure>
+                <Notifications />
+              </React.Suspense>
+            </QueryClientProvider>
+        </MantineProvider>
+      </ColorSchemeProvider>
     </>
   );
 }

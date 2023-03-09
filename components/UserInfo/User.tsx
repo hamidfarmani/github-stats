@@ -1,6 +1,8 @@
+import { SimpleGrid } from "@mantine/core";
+import { LanguageChart } from "../Charts/LanguageChart";
 import { DetailsCard } from "./DetailsCard";
 
-type userInformation = {
+type UserInformation = {
     name: string;
     avatar_url: string;
     location: string;
@@ -13,7 +15,7 @@ type userInformation = {
     html_url: string;
   }
 
-export function User({name, avatar_url, location, bio, followers, following, created_at, public_repos, login, html_url} : userInformation) {  
+export function User({name, avatar_url, location, bio, followers, following, created_at, public_repos, login, html_url} : UserInformation) {  
   
     const stats = [
         { "value": followers, "label": "Followers" },
@@ -23,6 +25,9 @@ export function User({name, avatar_url, location, bio, followers, following, cre
     return (
         <>
             <DetailsCard avatar_url={avatar_url} name={name} location={location} bio={bio} stats={stats} created_at={created_at} html_url={html_url} />
+            <SimpleGrid cols={3} pb="lg">
+                <LanguageChart userData={{name, avatar_url, location, bio, followers, following, created_at, public_repos, login, html_url}}/>
+            </SimpleGrid>
         </>
     );
   }

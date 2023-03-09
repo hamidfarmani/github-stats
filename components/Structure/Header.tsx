@@ -2,12 +2,11 @@
 import { ColorSchemeToggle } from "../ToggleScheme/ColorSchemeToggle";
 import Logo from "./Logo";
 
-import { useState } from 'react';
-import { createStyles, Header, Group, ActionIcon, Container, Burger, Stack, Text, Title } from '@mantine/core';
+import { ActionIcon, Container, createStyles, Group, Header, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { BrandInstagram, BrandTwitter, BrandYoutube } from "tabler-icons-react";
-import { useGetRateLimit } from "../../pages/api/data-access/useGetRateLimit";
 import moment from "moment";
+import { BrandGithub, BrandLinkedin, BrandYoutube } from "tabler-icons-react";
+import { useGetRateLimit } from "../../pages/api/data-access/useGetRateLimit";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -91,14 +90,14 @@ export function HeaderMiddle() {
         </Group>
 
         <Group spacing={0} className={classes.social} position="right" noWrap>
-          <ActionIcon size="lg">
-            <BrandTwitter size="1.1rem"  />
-          </ActionIcon>
-          <ActionIcon size="lg">
+          <ActionIcon size="lg" component="a" href="https://www.youtube.com/@hamidfarmani" target="_blank" >
             <BrandYoutube size="1.1rem"  />
           </ActionIcon>
-          <ActionIcon size="lg">
-            <BrandInstagram size="1.1rem"  />
+          <ActionIcon size="lg" component="a" href="https://github.com/hamidfarmani/github-stats" target="_blank">
+            <BrandGithub size="1.1rem"  />
+          </ActionIcon>
+          <ActionIcon size="lg" component="a" href="https://www.linkedin.com/in/hamidfarmani" target="_blank">
+            <BrandLinkedin size="1.1rem"  />
           </ActionIcon>
           <ColorSchemeToggle />
         </Group>
