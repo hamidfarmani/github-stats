@@ -1,4 +1,4 @@
-import { ActionIcon, Button, TextInput, TextInputProps, useMantineTheme } from '@mantine/core';
+import { Button, TextInput, TextInputProps, useMantineTheme } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useState } from 'react';
 import { ArrowRight, Search } from 'tabler-icons-react';
@@ -17,9 +17,6 @@ export function SearchUsername(props: TextInputProps) {
 
   const [username, setUsername] = useState('');
   const { data: userInformation, isLoading: isMessagesLoading } = useGetUser(username);
-
-
-
   
   function handleSearch() {  
     setUsername(form.values.usernameInput);
@@ -36,10 +33,10 @@ export function SearchUsername(props: TextInputProps) {
           radius="xl"
           size="md"
           rightSection={
-            <ActionIcon size={32} radius="xl" color={theme.primaryColor} variant="filled"
-            component={Button} type="submit">
+            <Button style={{borderRadius:"50%", height: 32, width:32,  padding: 0}}  color={theme.primaryColor} variant="filled"
+             type="submit">
                 <ArrowRight size="1.1rem"  />
-            </ActionIcon>
+            </Button>
           }
           placeholder="Search GitHub profile"
           rightSectionWidth={42}
