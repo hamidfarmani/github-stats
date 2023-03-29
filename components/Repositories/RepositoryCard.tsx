@@ -1,4 +1,4 @@
-import { Card, Group, RingProgress, Text } from "@mantine/core";
+import { Badge, Card, Group, RingProgress, Text } from "@mantine/core";
 import { ExternalLink } from "tabler-icons-react";
 import useRepositoryStyles from "./useRepositoryStyles";
 
@@ -37,39 +37,37 @@ export function RepositoryCard({
           {name}
         </Text>
         <Group spacing={5}>
-          <Text fz="xs" c="dimmed">
-            {language}
-          </Text>
+          <Badge>{language}</Badge>
           <RingProgress size={18} sections={[{ value: 80, color: "blue" }]} />
         </Group>
       </Group>
-      <Text mt="sm" mb="md" c="dimmed" fz="xs">
+      <Text mt="sm" mb="md" c="dimmed" fz="sm" mih={120}>
         {description}
       </Text>
       <Card.Section className={classes.footer}>
         <div>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" color="dimmed" align="center">
             Stars
           </Text>
-          <Text weight={500} size="sm">
+          <Text weight={500} size="sm" align="center">
             {stars}
           </Text>
         </div>
 
         <div>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" color="dimmed" align="center">
             Forks
           </Text>
-          <Text weight={500} size="sm">
+          <Text weight={500} size="sm" align="center">
             {forks}
           </Text>
         </div>
 
         <div>
-          <Text size="xs" color="dimmed">
+          <Text size="xs" color="dimmed" align="center">
             Issues
           </Text>
-          <Text weight={500} size="sm">
+          <Text weight={500} size="sm" align="center">
             {issues}
           </Text>
         </div>

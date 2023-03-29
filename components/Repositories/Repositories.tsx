@@ -1,15 +1,23 @@
-import { SimpleGrid, Text } from "@mantine/core";
+import {
+  Box,
+  Center,
+  SegmentedControl,
+  SimpleGrid,
+  Loader,
+} from "@mantine/core";
+import { useState } from "react";
+
+import { Bug, Calendar, GitFork, Star } from "tabler-icons-react";
 import { useGetRepositories } from "../../pages/api/data-access/useGetRepositories";
 import { RepositoryCard } from "./RepositoryCard";
 
 export function Repositories() {
   const { data: repositories, isLoading } = useGetRepositories("hamidfarmani");
+  const [sortedItems, setSortedItems] = useState(repositories);
 
-  if (isLoading) return <Text>Loading</Text>;
+  if (isLoading) return <Loader />;
 
-  console.log(repositories);
-
-  const items = repositories.map((repo) => (
+  const items = sortedItems.map((repo) => (
     <RepositoryCard
       key={repo.id}
       name={repo.name}
@@ -22,9 +30,63 @@ export function Repositories() {
     />
   ));
 
+  function sortRepositories(sortBy) {
+    const sortedRepos = [...repositories].sort((a, b) => {
+      if (sortBy === "updated_at") {
+        return Date.parse(b.updated_at) - Date.parse(a.updated_at);
+      }
+      return b[sortBy] - a[sortBy];
+    });
+    setSortedItems(sortedRepos);
+  }
+
   return (
     <>
-      <SimpleGrid cols={4}>{items}</SimpleGrid>;
+      <Center>
+        <SegmentedControl
+          my="sm"
+          onChange={(value) => sortRepositories(value)}
+          data={[
+            {
+              value: "updated_at",
+              label: (
+                <Center>
+                  <Calendar size="1rem" />
+                  <Box ml={10}>Updated</Box>
+                </Center>
+              ),
+            },
+            {
+              value: "stargazers_count",
+              label: (
+                <Center>
+                  <Star size="1rem" />
+                  <Box ml={10}>Star</Box>
+                </Center>
+              ),
+            },
+            {
+              value: "forks_count",
+              label: (
+                <Center>
+                  <GitFork size="1rem" />
+                  <Box ml={10}>Fork</Box>
+                </Center>
+              ),
+            },
+            {
+              value: "open_issues_count",
+              label: (
+                <Center>
+                  <Bug size="1rem" />
+                  <Box ml={10}>Issues</Box>
+                </Center>
+              ),
+            },
+          ]}
+        />
+      </Center>
+      <SimpleGrid cols={3}>{items}</SimpleGrid>;
     </>
   );
 }
