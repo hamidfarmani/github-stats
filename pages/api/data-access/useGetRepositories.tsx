@@ -10,7 +10,7 @@ async function getRepositories(username) {
 }
 
 export const useGetRepositories = (username) => {
-  return useQuery(["user", username], () => getRepositories(username), {
+  return useQuery(["repositories", username], () => getRepositories(username), {
     suspense: true,
     refetchOnWindowFocus: false,
     enabled: !!username,

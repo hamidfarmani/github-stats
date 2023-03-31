@@ -1,5 +1,4 @@
 import { Badge, Card, Group, RingProgress, Text } from "@mantine/core";
-import { ExternalLink } from "tabler-icons-react";
 import useRepositoryStyles from "./useRepositoryStyles";
 
 interface CardWithStatsProps {

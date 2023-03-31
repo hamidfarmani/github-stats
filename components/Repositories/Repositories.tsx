@@ -11,8 +11,8 @@ import { Bug, Calendar, GitFork, Star } from "tabler-icons-react";
 import { useGetRepositories } from "../../pages/api/data-access/useGetRepositories";
 import { RepositoryCard } from "./RepositoryCard";
 
-export function Repositories() {
-  const { data: repositories, isLoading } = useGetRepositories("hamidfarmani");
+export function Repositories({ login }) {
+  const { data: repositories, isLoading } = useGetRepositories(login);
   const [sortedItems, setSortedItems] = useState(repositories);
 
   if (isLoading) return <Loader />;

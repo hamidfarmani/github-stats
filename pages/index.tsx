@@ -6,7 +6,6 @@ export default function HomePage() {
   return (
     <PageContainer title="GitHub stats">
       <SearchUsername />
-      <Repositories />
     </PageContainer>
   );
 }
