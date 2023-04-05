@@ -8,12 +8,13 @@ import { CHART_SIZE, ICON_SIZE, useChartsTheme } from "./chartsTheme";
 export function LanguageChart({ userData }) {
   const { classes } = useChartsTheme();
 
-  const [username] = useState(userData.login);
   const [error, setError] = useState(null);
   const [langChartData, setLangChartData] = useState(null);
 
   const initLangChart = () => {
-    const me = new GhPolyglot(`${username}`);
+    console.log(userData.login);
+
+    const me = new GhPolyglot(`${userData.login}`);
     me.userStats((err, langData) => {
       if (err) {
         console.error("Error:", err);
@@ -51,8 +52,10 @@ export function LanguageChart({ userData }) {
   };
 
   useEffect(() => {
+    console.log(userData);
+
     initLangChart();
-  }, []);
+  }, [userData]);
 
   const langChartError = !(langChartData && langChartData.length > 0);
 

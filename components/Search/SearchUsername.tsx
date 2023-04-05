@@ -3,13 +3,14 @@ import {
   TextInput,
   TextInputProps,
   useMantineTheme,
+  Loader,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, Search } from "tabler-icons-react";
 import { useGetUser } from "../../pages/api/data-access/useGetUser";
-import { User } from "../UserInfo/User";
 import { Repositories } from "../Repositories/Repositories";
+import { User } from "../UserInfo/User";
 
 export function SearchUsername(props: TextInputProps) {
   const theme = useMantineTheme();
@@ -21,12 +22,15 @@ export function SearchUsername(props: TextInputProps) {
   });
 
   const [username, setUsername] = useState("");
-  const { data: userInformation, isLoading: isMessagesLoading } =
-    useGetUser(username);
+  const { data: userInformation, isLoading } = useGetUser(username);
+
+  console.log("userInformation", userInformation);
 
   function handleSearch() {
     setUsername(form.values.usernameInput);
   }
+
+  if (isLoading) return <Loader />;
 
   return (
     <>
@@ -48,11 +52,9 @@ export function SearchUsername(props: TextInputProps) {
           }
           placeholder="Search GitHub profile"
           rightSectionWidth={42}
-          {...props}
           {...form.getInputProps("usernameInput")}
         />
       </form>
-
       {userInformation && (
         <>
           <User {...userInformation} />

@@ -6,14 +6,10 @@ async function getUser(username) {
   return response;
 }
 
-export const useGetUser = (username) => {  
-  return useQuery(
-    ["user", username],
-    () => getUser(username),
-    {
-      suspense: true,
-      refetchOnWindowFocus: false,
-      enabled: !!username,
-    }
-  );
+export const useGetUser = (username) => {
+  return useQuery(["user", username], () => getUser(username), {
+    suspense: true,
+    refetchOnWindowFocus: false,
+    enabled: !!username,
+  });
 };

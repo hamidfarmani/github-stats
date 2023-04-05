@@ -1,13 +1,16 @@
-import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
+import {
+  ColorSchemeProvider,
+  MantineProvider,
+  Center,
+  Loader,
+} from "@mantine/core";
 import { getCookie, setCookie } from "cookies-next";
 import NextApp from "next/app";
 import React, { useState } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 
-
-import { Notifications } from '@mantine/notifications';
+import { Notifications } from "@mantine/notifications";
 import WebsiteStructure from "../components/WebsiteStructure";
-
 
 export default function App(props) {
   const { Component, pageProps } = props;
@@ -26,16 +29,29 @@ export default function App(props) {
 
   return (
     <>
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-        <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
+      <ColorSchemeProvider
+        colorScheme={colorScheme}
+        toggleColorScheme={toggleColorScheme}
+      >
+        <MantineProvider
+          theme={{ colorScheme }}
+          withGlobalStyles
+          withNormalizeCSS
+        >
           <QueryClientProvider client={queryClient}>
-            <React.Suspense fallback={<>Loading</>}>
-                <WebsiteStructure>
-                  <Component {...pageProps} />
-                </WebsiteStructure>
-                <Notifications />
-              </React.Suspense>
-            </QueryClientProvider>
+            <React.Suspense
+              fallback={
+                <Center>
+                  <Loader />
+                </Center>
+              }
+            >
+              <WebsiteStructure>
+                <Component {...pageProps} />
+              </WebsiteStructure>
+              <Notifications />
+            </React.Suspense>
+          </QueryClientProvider>
         </MantineProvider>
       </ColorSchemeProvider>
     </>

@@ -5,7 +5,7 @@ import {
   SimpleGrid,
   Loader,
 } from "@mantine/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { Bug, Calendar, GitFork, Star } from "tabler-icons-react";
 import { useGetRepositories } from "../../pages/api/data-access/useGetRepositories";
@@ -14,6 +14,12 @@ import { RepositoryCard } from "./RepositoryCard";
 export function Repositories({ login }) {
   const { data: repositories, isLoading } = useGetRepositories(login);
   const [sortedItems, setSortedItems] = useState(repositories);
+
+  useEffect(() => {
+    if (repositories) {
+      setSortedItems(repositories);
+    }
+  }, [repositories]);
 
   if (isLoading) return <Loader />;
 
