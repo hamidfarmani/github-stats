@@ -2,6 +2,7 @@ import { SimpleGrid } from "@mantine/core";
 import { LanguageChart } from "../Charts/LanguageChart";
 import { DetailsCard } from "./DetailsCard";
 import { MostStarredChart } from "../Charts/MostStarredChart";
+import { StarPerLanguageChart } from "../Charts/StarPerLanguageChart";
 
 type UserInformation = {
   name: string;
@@ -60,6 +61,7 @@ export function User({
           }}
         />
         <MostStarredChart login={login} />
+        <StarPerLanguageChart login={login} />
       </SimpleGrid>
     </>
   );

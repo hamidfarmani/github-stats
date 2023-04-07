@@ -1,36 +1,40 @@
 import { Paper, Text, ThemeIcon } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Language, Star } from "tabler-icons-react";
+import { Stars } from "tabler-icons-react";
+import { useGetRepositories } from "../../pages/api/data-access/useGetRepositories";
 import buildChart from "./BuildChart";
 import { CHART_SIZE, ICON_SIZE, useChartsTheme } from "./chartsTheme";
-import { useGetRepositories } from "../../pages/api/data-access/useGetRepositories";
 import { generateRandomColor } from "../Utils";
 
-export function MostStarredChart({ login }) {
+export function StarPerLanguageChart({ login }) {
   const { classes, theme } = useChartsTheme();
   const { data: repositories, isLoading } = useGetRepositories(login);
 
   const [starChartData, setStarChartData] = useState(null);
 
   const initStarredChart = () => {
-    const ctx = document.getElementById("starChart");
-    const LIMIT = 5;
-    const sortProperty = "stargazers_count";
-    const mostStarredRepos = repositories
-      .filter((repo) => !repo.fork)
-      .sort((a, b) => b[sortProperty] - a[sortProperty])
-      .slice(0, LIMIT);
-    const labels = mostStarredRepos.map((repo) => repo.name);
-    const data = mostStarredRepos.map((repo) => repo[sortProperty]);
-    const borderColor = labels.map(generateRandomColor);
-    const backgroundColor = borderColor.map((color) => `${color}B3`);
+    const ctx = document.getElementById("thirdChart");
+    const filteredRepos = repositories.filter(
+      (repo) => !repo.fork && repo.stargazers_count > 0
+    );
+    const uniqueLangs = new Set(filteredRepos.map((repo) => repo.language));
+    const labels = Array.from(uniqueLangs.values()).filter((l) => l);
+    const data = labels.map((lang) => {
+      const repos = filteredRepos.filter((repo) => repo.language === lang);
+      const starsArr = repos.map((r) => r.stargazers_count);
+      const starSum = starsArr.reduce((a, b) => a + b, 0);
+      return starSum;
+    });
 
     setStarChartData(data);
 
-    if (data.length > 0) {
-      const chartType = "bar";
-      const axes = true;
-      const legend = false;
+    if (data && data.length > 0) {
+      const chartType = "pie";
+      const axes = false;
+      const legend = true;
+
+      const borderColor = labels.map(generateRandomColor);
+      const backgroundColor = borderColor.map((color) => `${color}B3`);
       const config = {
         ctx,
         chartType,
@@ -54,14 +58,14 @@ export function MostStarredChart({ login }) {
   return (
     <Paper radius="md" withBorder className={classes.card} mt={ICON_SIZE}>
       <ThemeIcon className={classes.icon} size={ICON_SIZE} radius={ICON_SIZE}>
-        <Star size="2rem" />
+        <Stars size="2rem" />
       </ThemeIcon>
 
       <Text ta="center" fw={700} className={classes.title}>
-        Most starred
+        Stars per lanugae
       </Text>
       {starChartError && <p>Nothing to see here!</p>}
-      <canvas id="starChart" width={CHART_SIZE} height={CHART_SIZE} />
+      <canvas id="thirdChart" width={CHART_SIZE} height={CHART_SIZE} />
     </Paper>
   );
 }

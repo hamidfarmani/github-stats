@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Language } from "tabler-icons-react";
 import buildChart from "./BuildChart";
 import { CHART_SIZE, ICON_SIZE, useChartsTheme } from "./chartsTheme";
+import { generateRandomColor } from "../Utils";
 
 export function LanguageChart({ userData }) {
   const { classes } = useChartsTheme();
@@ -28,11 +29,8 @@ export function LanguageChart({ userData }) {
       setLangChartData(data);
 
       if (data.length > 0) {
-        const backgroundColor = langData.map(
-          ({ color }) =>
-            `#${color.length > 4 ? color.slice(1) : color.slice(1).repeat(2)}B3`
-        );
-        const borderColor = langData.map((lang) => `${lang.color}`);
+        const borderColor = labels.map(generateRandomColor);
+        const backgroundColor = borderColor.map((color) => `${color}B3`);
         const chartType = "doughnut";
         const axes = false;
         const legend = true;
