@@ -10,8 +10,11 @@ import { useState, useEffect } from "react";
 import { Bug, Calendar, GitFork, Star } from "tabler-icons-react";
 import { useGetRepositories } from "../../pages/api/data-access/useGetRepositories";
 import { RepositoryCard } from "./RepositoryCard";
+import { useMediaQuery } from "@mantine/hooks";
 
 export function Repositories({ login }) {
+  const largeScreen = useMediaQuery("(min-width: 60em)");
+
   const { data: repositories, isLoading } = useGetRepositories(login);
   const [sortedItems, setSortedItems] = useState(repositories);
 
@@ -92,7 +95,7 @@ export function Repositories({ login }) {
           ]}
         />
       </Center>
-      <SimpleGrid cols={3}>{items}</SimpleGrid>;
+      <SimpleGrid cols={largeScreen ? 3 : 1}>{items}</SimpleGrid>;
     </>
   );
 }

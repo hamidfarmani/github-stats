@@ -3,6 +3,7 @@ import { LanguageChart } from "../Charts/LanguageChart";
 import { DetailsCard } from "./DetailsCard";
 import { MostStarredChart } from "../Charts/MostStarredChart";
 import { StarPerLanguageChart } from "../Charts/StarPerLanguageChart";
+import { useMediaQuery } from "@mantine/hooks";
 
 type UserInformation = {
   name: string;
@@ -29,6 +30,8 @@ export function User({
   login,
   html_url,
 }: UserInformation) {
+  const largeScreen = useMediaQuery("(min-width: 60em)");
+
   const stats = [
     { value: followers, label: "Followers" },
     { value: following, label: "Follows" },
@@ -45,7 +48,7 @@ export function User({
         created_at={created_at}
         html_url={html_url}
       />
-      <SimpleGrid cols={3} pb="lg">
+      <SimpleGrid cols={largeScreen ? 3 : 1} pb="lg">
         <LanguageChart
           userData={{
             name,
